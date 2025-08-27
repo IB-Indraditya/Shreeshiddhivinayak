@@ -22,7 +22,17 @@ import {
 } from "@/components/ui/dialog"
 import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { generateHoroscope, GenerateHoroscopeOutput } from "@/ai/flows/generate-horoscope";
+
+// Local client-side replacement for server action
+type GenerateHoroscopeOutput = { horoscope: string };
+async function generateHoroscope({ sign, language }: { sign: string; language: 'en' | 'mr' }): Promise<GenerateHoroscopeOutput> {
+    const baseByLang: Record<'en' | 'mr', string> = {
+        en: `Today, ${sign} may find clarity by balancing ambitions with mindfulness. Focus on small, meaningful steps in career and relationships. Keep hydration and rest a priority. Financially, steady choices beat impulsive ones.`,
+        mr: `${sign} साठी आजचा दिवस संतुलन साधण्याचा आहे. करिअर व नातेसंबंधांमध्ये छोटे पण अर्थपूर्ण पाऊल उचला. आरोग्यासाठी पाणी व विश्रांतीला प्राधान्य द्या. आर्थिक बाबतीत घाई न करता विचारपूर्वक निर्णय घ्या.`,
+    };
+    await new Promise(r => setTimeout(r, 500));
+    return { horoscope: baseByLang[language] };
+}
 
 const zodiacSignsData = {
   en: [
